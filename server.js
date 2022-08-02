@@ -18,7 +18,9 @@ const sess = {
   })
 };
 
+//below lines are the instructions for express
 app.use(session(sess));
+//setting up handlebars as defualt engine
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
@@ -26,6 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+//navigates to controllers(routes) folder from here
 app.use(require('./controllers/'));
 
 sequelize.sync({ force: false }).then(() => {

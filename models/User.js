@@ -7,8 +7,8 @@ const bcrypt = require('bcrypt');
 
 
 class User extends Model {
-    checkPassword(loginPw) {
-        return bcrypt.compareSync(loginPw, this.password);
+    checkPassword(loginPassword) {
+        return bcrypt.compareSync(loginPassword, this.password);
     }
 }
 
@@ -19,7 +19,7 @@ User.init({
         primaryKey: true,
         autoIncrement: true
     },
-    username: {
+    userName: {
         type: DataTypes.STRING,
         allowNull: false
     },
