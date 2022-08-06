@@ -9,7 +9,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const helpers = require('./utils/helpers');
 const hbs = exphbs.create({ helpers });
 const sess = {
-  secret: process.env.DB_SECRET,
+	secret: "Super secret secret",
   cookie: {},
   resave: false,
   saveUninitialized: true,
@@ -17,6 +17,7 @@ const sess = {
     db: sequelize
   })
 };
+
 
 //below lines are the instructions for express
 app.use(session(sess));
