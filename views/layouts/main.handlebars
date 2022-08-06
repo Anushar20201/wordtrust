@@ -16,16 +16,21 @@
       </h1>
       <nav>
         {{#if loggedIn}}
+        <a href="/">homepage</a>
+        <a href="/dashboard/create/" class="navbar-item is-hoverable pt-1 mr-4">create post</a>
+
         <a href="/dashboard">dashboard</a>
-        <button id="logout" class="btn-no-style">logout</button>
+        <button id="logout">logout</button>
         {{else}}
+        <a href="/">homepage</a>
+
         <a href="/login">login</a>
         {{/if}}
       </nav>
     </header>
-        <div class="main-head">
-                <h1>WordTrust</h1>
-        </div>
+    <div class="main-head">
+      <h1>WordTrust</h1>
+    </div>
     <main>
       {{{ body }}}
     </main>
@@ -33,7 +38,7 @@
       Thanks for visiting!
     </footer>
   </div>
-  
+
   {{#if loggedIn}}
   <script src="/javascript/logout.js"></script>
   {{/if}}
