@@ -19,6 +19,8 @@ async function commentFormHandler(event) {
             }
         });
 
+        // reloading the same page when a comment is added
+
         if (response.ok) {
             document.location.reload();
         } else {

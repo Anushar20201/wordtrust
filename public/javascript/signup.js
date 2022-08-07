@@ -15,6 +15,7 @@ async function signupFormHandler(event) {
                 'Content-Type': 'application/json'
             }
         });
+    // redirecting to the dashboard
 
         if (response.ok) {
             document.location.replace('/dashboard');

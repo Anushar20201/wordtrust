@@ -10,6 +10,8 @@ async function deleteFormHandler(event) {
     });
 
     if (response.ok) {
+            // redirecting to the dashboard
+
         document.location.replace('/dashboard');
     } else {
         alert(response.statusText);

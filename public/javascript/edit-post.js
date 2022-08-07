@@ -18,6 +18,8 @@ async function editFormHandler(event) {
         }
     });
 
+    // redirecting to the dashboard
+
     if (response.ok) {
         document.location.replace('/dashboard');
     } else {
