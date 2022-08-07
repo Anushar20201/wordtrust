@@ -32,15 +32,18 @@ const sess = {
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+//configuring the handlebar as the defualt engine
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
-
+//using sesion here
 app.use(session(sess));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
+
+//calling routes (controllers)
 app.use(routes)
 
 sequelize.sync();
