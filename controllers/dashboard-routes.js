@@ -7,7 +7,7 @@ const {
 } = require('../models');
 const withAuth = require('../utils/auth');
 
-
+// Using middleware withAuth to check  the user is logged in or not
 router.get('/', withAuth, (req, res) => {
     Post.findAll({
         where: {
@@ -74,12 +74,6 @@ router.get('/edit/:id', withAuth, (req, res) => {
         ]
     })
         .then(data => {
-            if (!data) {
-                res.status(404).json({
-                    message: 'Not found'
-                });
-                return;
-            }
 
             const post = data.get({
                 plain: true

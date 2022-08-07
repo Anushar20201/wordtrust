@@ -6,7 +6,7 @@ const {
     Comment
 } = require('../models');
 
-
+//finding all the posts
 router.get('/', (req, res) => {
     Post.findAll({
         attributes: [
@@ -45,6 +45,7 @@ router.get('/', (req, res) => {
         });
 });
 
+//finding a  post based on id
 router.get('/post/:id', (req, res) => {
     Post.findOne({
         where: {
@@ -71,14 +72,8 @@ router.get('/post/:id', (req, res) => {
         ]
     })
         .then(data => {
-            if (!data) {
-                res.status(404).json({
-                    message: 'Not found'
-                });
-                return;
-            }
 
-            const post = data.get({
+        const post = data.get({
                 plain: true
             });
 
