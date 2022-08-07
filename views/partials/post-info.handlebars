@@ -1,24 +1,17 @@
-<div class="card mb-6">
-  <header class="card-header card-header-title has-background-grey-lighter">
-    
-        <div class="column">
-            <p class=" has-text-primary-light"></p>
-      <a href="/post/{{id}}"  class="has-text-black is-capitalized is-pulled-left">{{title}} </a></p>
-      </div>
-
-      <div class="column">
-      <span class=""> </span>
-      </div>
-    
-  </header>
-
-    <div class="card-content">
-        <div class="content has-text-justified">
-            {{post_content}}
-        </div>
-            <div class="is-pulled-right">
-                <b>{{user.username}}</b> | 
-                 | {{format_date createdON}} | <a href="/post/{{id}}">{{comments.length}} {{format_plural "comment" comments.length}}</a>
+<article class="post">
+    <div class="whole-post">
+        <div class="info-section">
+            <div class="post-name">
+                <a href="/post/{{id}}" class="links">{{title}}</a>
             </div>
-        
+            <div class="created-by">
+                <p id="comment-subtitle">
+                    Posted by <b>{{user.username}} </b> on <b>{{formatDate created_at}}</b>
+                </p>
+            </div>
+        </div>
+        <div class="content-section">
+            <p>{{content}}</p>
+        </div>
     </div>
+</article>

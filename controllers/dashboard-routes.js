@@ -11,25 +11,25 @@ const withAuth = require('../utils/auth');
 router.get('/', withAuth, (req, res) => {
     Post.findAll({
         where: {
-            userId: req.session.userId
+            user_id: req.session.user_id
         },
         attributes: [
             'id',
             'title',
             'content',
-            'createdOn'
+            'created_at'
         ],
         include: [{
             model: Comment,
-            attributes: ['id', 'commentLine', 'postId', 'userId', 'createdOn'],
+            attributes: ['id', 'commentLine', 'post_id', 'user_id', 'created_at'],
             include: {
                 model: User,
-                attributes: ['userName']
+                attributes: ['username']
             }
         },
         {
             model: User,
-            attributes: ['userName']
+            attributes: ['username']
         }
         ]
     })
@@ -57,26 +57,26 @@ router.get('/edit/:id', withAuth, (req, res) => {
             'id',
             'title',
             'content',
-            'createdOn'
+            'created_at'
         ],
         include: [{
             model: Comment,
-            attributes: ['id', 'commentLine', 'postId', 'userId', 'createdOn'],
+            attributes: ['id', 'commentLine', 'post_id', 'user_id', 'created_at'],
             include: {
                 model: User,
-                attributes: ['userName']
+                attributes: ['username']
             }
         },
         {
             model: User,
-            attributes: ['userName']
+            attributes: ['username']
         }
         ]
     })
         .then(data => {
             if (!data) {
                 res.status(404).json({
-                    message: 'Sorry, not found'
+                    message: 'Not found'
                 });
                 return;
             }

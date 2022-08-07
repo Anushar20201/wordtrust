@@ -13,19 +13,19 @@ router.get('/', (req, res) => {
             'id',
             'title',
             'content',
-            'createdOn'
+            'created_at'
         ],
         include: [{
             model: Comment,
-            attributes: ['id', 'commentLine', 'postId', 'userId', 'createdOn'],
+            attributes: ['id', 'commentLine', 'post_id', 'user_id', 'created_at'],
             include: {
                 model: User,
-                attributes: ['userName']
+                attributes: ['username']
             }
         },
         {
             model: User,
-            attributes: ['userName']
+            attributes: ['username']
         }
         ]
     })
@@ -33,7 +33,7 @@ router.get('/', (req, res) => {
             const posts = data.map(post => post.get({
                 plain: true
             }));
-            //rendering homepage handlers here
+
             res.render('homepage', {
                 posts,
                 loggedIn: req.session.loggedIn
@@ -54,26 +54,26 @@ router.get('/post/:id', (req, res) => {
             'id',
             'title',
             'content',
-            'createdOn'
+            'created_at'
         ],
         include: [{
             model: Comment,
-            attributes: ['id', 'commentLine', 'postId', 'userId', 'createdOn'],
+            attributes: ['id', 'commentLine', 'post_id', 'user_id', 'created_at'],
             include: {
                 model: User,
-                attributes: ['userName']
+                attributes: ['username']
             }
         },
         {
             model: User,
-            attributes: ['userName']
+            attributes: ['username']
         }
         ]
     })
         .then(data => {
             if (!data) {
                 res.status(404).json({
-                    message: 'Sorry, post not found'
+                    message: 'Not found'
                 });
                 return;
             }
@@ -110,6 +110,7 @@ router.get('/signup', (req, res) => {
 
     res.render('signup');
 });
+
 
 
 

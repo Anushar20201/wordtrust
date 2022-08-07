@@ -12,14 +12,14 @@ router.get('/', (req, res) => {
             exclude: ['password']
         }
     })
-        .then(data => res.json(data))
+        .then(dbUserData => res.json(dbUserData))
         .catch(err => {
             console.log(err);
             res.status(500).json(err);
         });
 });
 
-// Getting specific user with id
+// Get specific user
 router.get('/:id', (req, res) => {
     User.findOne({
         attributes: {
@@ -30,11 +30,11 @@ router.get('/:id', (req, res) => {
         },
         include: [{
             model: Post,
-            attributes: ['id', 'title', 'content', 'createdOn']
+            attributes: ['id', 'title', 'content', 'created_at']
         },
         {
             model: Comment,
-            attributes: ['id', 'commentLine', 'createdOn'],
+            attributes: ['id', 'commentLine', 'created_at'],
             include: {
                 model: Post,
                 attributes: ['title']
@@ -42,14 +42,14 @@ router.get('/:id', (req, res) => {
         }
         ]
     })
-        .then(data => {
-            if (!data) {
+        .then(dbUserData => {
+            if (!dbUserData) {
                 res.status(404).json({
-                    message: 'Sorry, not found any'
+                    message: 'Not found'
                 });
                 return;
             }
-            res.json(data);
+            res.json(dbUserData);
         })
         .catch(err => {
             console.log(err);
@@ -57,19 +57,19 @@ router.get('/:id', (req, res) => {
         });
 });
 
-// Creating a new user
+// Create a user
 router.post('/', (req, res) => {
     User.create({
-        userName: req.body.userName,
+        username: req.body.username,
         password: req.body.password
     })
-        .then(data => {
+        .then(dbUserData => {
             req.session.save(() => {
-                req.session.userId = data.id;
-                req.session.userName = data.userName;
+                req.session.user_id = dbUserData.id;
+                req.session.username = dbUserData.username;
                 req.session.loggedIn = true;
 
-                res.json(data);
+                res.json(dbUserData);
             });
         })
         .catch(err => {
@@ -81,11 +81,11 @@ router.post('/', (req, res) => {
 router.post('/login', (req, res) => {
     User.findOne({
         where: {
-            userName: req.body.userName
+            username: req.body.username
         }
     })
-        .then(data => {
-            if (!data) {
+        .then(dbUserData => {
+            if (!dbUserData) {
                 res.status(400).json({
                     message: 'Not found'
                 });
@@ -93,33 +93,33 @@ router.post('/login', (req, res) => {
             }
 
             req.session.save(() => {
-                req.session.userId = data.id;
-                req.session.userName = data.userName;
+                req.session.user_id = dbUserData.id;
+                req.session.username = dbUserData.username;
                 req.session.loggedIn = true;
 
                 res.json({
-                    user: data,
-                    message: 'Successfully logged in'
+                    user: dbUserData,
+                    message: 'logged in!'
                 });
             });
 
-            const validPassword = data.checkPassword(req.body.password);
+            const validPassword = dbUserData.checkPassword(req.body.password);
 
             if (!validPassword) {
                 res.status(400).json({
-                    message: 'Entered Wrong password'
+                    message: 'Incorrect password!'
                 });
                 return;
             }
 
             req.session.save(() => {
-                req.session.userId = data.id;
-                req.session.userName = data.userName;
+                req.session.user_id = dbUserData.id;
+                req.session.username = dbUserData.username;
                 req.session.loggedIn = true;
 
                 res.json({
-                    user: data,
-                    message: 'Successfully logged in!!'
+                    user: dbUserData,
+                    message: 'logged in!'
                 });
             });
         });

@@ -7,20 +7,23 @@ const {
 const withAuth = require('../../utils/auth');
 
 
-// Getting all posts
+// Get all posts
 router.get("/", (req, res) => {
     Post.findAll({
-        attributes: ["id", "content", "title", "createdOn"],
+        attributes: ["id", "content", "title", "created_at"],
+        order: [
+            ["created_at", "DESC"]
+        ],
         include: [{
             model: User,
-            attributes: ["userName"],
+            attributes: ["username"],
         },
         {
             model: Comment,
-            attributes: ["id", "commentText", "postId", "userId", "createdOn"],
+            attributes: ["id", "commentLine", "post_id", "user_id", "created_at"],
             include: {
                 model: User,
-                attributes: ["userName"],
+                attributes: ["username"],
             },
         },
         ],
@@ -32,23 +35,23 @@ router.get("/", (req, res) => {
         });
 });
 
-// Getting a single post
+// Get a single post
 router.get("/:id", (req, res) => {
     Post.findOne({
         where: {
             id: req.params.id,
         },
-        attributes: ["id", "content", "title", "createdOn"],
+        attributes: ["id", "content", "title", "created_at"],
         include: [{
             model: User,
-            attributes: ["userName"],
+            attributes: ["username"],
         },
         {
             model: Comment,
-            attributes: ["id", "commentLine", "postId", "userId", "createdOn"],
+            attributes: ["id", "commentLine", "post_id", "user_id", "created_at"],
             include: {
                 model: User,
-                attributes: ["userName"],
+                attributes: ["username"],
             },
         },
         ],
@@ -56,7 +59,7 @@ router.get("/:id", (req, res) => {
         .then((data) => {
             if (!data) {
                 res.status(404).json({
-                    message: "No post found with this id"
+                    message: 'Not found'
                 });
                 return;
             }
@@ -68,12 +71,13 @@ router.get("/:id", (req, res) => {
         });
 });
 
-// Creating a post
+// Create a post
 router.post("/", withAuth, (req, res) => {
+    console.log("creating");
     Post.create({
         title: req.body.title,
         content: req.body.post_content,
-        userId: req.session.userId
+        user_id: req.session.user_id
     })
         .then((data) => res.json(data))
         .catch((err) => {
@@ -82,7 +86,7 @@ router.post("/", withAuth, (req, res) => {
         });
 });
 
-// Updating a post
+// Update a post
 router.put("/:id", withAuth, (req, res) => {
     Post.update({
         title: req.body.title,
@@ -95,7 +99,7 @@ router.put("/:id", withAuth, (req, res) => {
         .then((data) => {
             if (!data) {
                 res.status(404).json({
-                    message: "Not found"
+                    message: 'Not found'
                 });
                 return;
             }
@@ -107,7 +111,7 @@ router.put("/:id", withAuth, (req, res) => {
         });
 });
 
-//Deleting a post
+//Delete a post
 router.delete("/:id", withAuth, (req, res) => {
     Post.destroy({
         where: {
@@ -117,7 +121,7 @@ router.delete("/:id", withAuth, (req, res) => {
         .then((data) => {
             if (!data) {
                 res.status(404).json({
-                    message: "Not found"
+                    message: 'Not found'
                 });
                 return;
             }

@@ -7,7 +7,7 @@ const {
 const withAuth = require('../../utils/auth');
 
 
-//Getting all existing comments
+//Get all comments
 router.get("/", (req, res) => {
     Comment.findAll()
         .then((data) => res.json(data))
@@ -17,14 +17,14 @@ router.get("/", (req, res) => {
         });
 });
 
-//Creating a new comment
+//Create a comment
 router.post('/', withAuth, (req, res) => {
     if (req.session) {
         Comment.create({
-                commentText: req.body.commentText,
-                postId: req.body.postId,
-                userId: req.session.userId
-            })
+            commentLine: req.body.commentLine,
+            post_id: req.body.post_id,
+            user_id: req.session.user_id
+        })
             .then(data => res.json(data))
             .catch(err => {
                 console.log(err);
