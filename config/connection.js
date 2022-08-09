@@ -8,6 +8,11 @@ const sequelize = new Sequelize(
   {
     host: 'localhost',
     dialect: 'mysql',
+    protocol: 'mysql',
+    ssl: {
+            require: true,
+            rejectUnauthorized: false
+        }
     port: 3306,
   }
 );
