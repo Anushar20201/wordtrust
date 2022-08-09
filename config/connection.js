@@ -6,6 +6,8 @@ require('dotenv').config();
 // Create connection to our database, pass in your MySQL information for username and password
 let sequelize;
 
+
+
 if (process.env.CLEARDB_DATABASE_URL) {
   sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL);
 } else {
