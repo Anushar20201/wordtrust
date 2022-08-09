@@ -42,9 +42,7 @@
  - THEN I am able to view comments but I am prompted to log in again before I can add, update, or delete comments
 
 ### Link
-This can be accessible at : https://github.com/Anushar20201/wordtrust
-
-### Video
+This can be accessible at : https://wordtrust.herokuapp.com/
 
 
 ### Screenshot
