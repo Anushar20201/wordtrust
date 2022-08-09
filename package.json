@@ -16,5 +16,11 @@
   "devDependencies": {},
   "scripts": {
     "start": "node server.js"
+  },
+  "engines": {
+    "node": "16.15.1",
+    "npm" : "8.11.0"
+
   }
+
 }
