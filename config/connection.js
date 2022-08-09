@@ -12,8 +12,8 @@ const sequelize = new Sequelize(
     ssl: {
             require: true,
             rejectUnauthorized: false
-        }
-    port: 3306,
+        },
+    port: 3306
   }
 );
 
